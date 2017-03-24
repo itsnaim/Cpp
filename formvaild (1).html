@@ -1,0 +1,181 @@
+<html><head>
+<title>Form Validation</title>
+<style>
+.d{
+	margin-left:350px;
+	text-align:left;
+	float:center;
+	border-radius: 15px;
+	width:700px;
+	height:auto;
+    background-color: #f2f2f2;
+    padding: 20px;
+}
+
+.head{
+	text-align:center;
+	text-decoration:underline;
+
+}
+
+.frm{
+align:left;
+}
+
+.errorbox{
+color:red;
+font-size:15px;
+}
+</style>
+
+<script>
+	function emailval(){
+	//shweta.thakur10@gmail.co.in
+		var pattern=/^[a-z][A-Z0-9a-z_\.]+@[a-z]+\.[a-z]{2,3}(\.[a-z]+)?$/;  //hamara level ban gaya
+		
+		///^[a-z0-9_.]+@[a-z]+\.[a-z]{2,3}+\.?[a-z]+$/; //hamara level test case me standard ka jhol
+		
+		<!--starts wd word,can hv \.\_ word{1/more} -->
+								<!--non-word{0/more},only1@,chars1/more} for domain,\.{1},char for com/in, optional \. and char for subdomain-->
+		var emailInput=document.getElementById("eid").value;		//capture eid and gets text/value inside it
+		console.log(pattern.test(emailInput));
+		var emailerror=document.getElementById("emailerror");		//puts span tag in emailerror
+		var result=pattern.test(emailInput);
+		if(result)
+			emailerror.innerHTML="";
+		else
+			emailerror.innerHTML="Please enter valid Email Address";
+		return result;
+	} 
+
+	function usernmval(){
+	var pattern=/^[a-zA-Z0-9_?][a-zA-Z0-9_?]{5,15}/;		//start with small letters numbers or \_ and ends with d same. char lmt=15
+	var userid=document.getElementById("uid").value;
+	console.log(pattern.test(userid));
+	var useriderror=document.getElementById("useriderror");
+	var result=pattern.test(userid);
+	if(result)
+		useriderror.innerHTML="";
+	else
+		useriderror.innerHTML="Invalid Username";
+	return result;
+	}
+	
+	function passwordval(){
+		
+		var pattern=/^[a-zA-Z0-9][A-Za-z0-9_*.*@*#*]{7,}/;	//start wd small/cap letters/number; has small/cap/numbers/_,.,@,#{0/mre};min 8 chars in total 
+		var pwdInput=document.getElementById("pwd").value;		//value of textbx with id pwd
+		console.log(pattern.test(pwdInput));
+		var passworderror=document.getElementById("passworderror");		//span
+		var result=pattern.test(pwdInput);
+		if(result)
+			passworderror.innerHTML="";
+		else
+			passworderror.innerHTML="Password should be 8-characters long alphanumerical and contain atlest one block letter, one special character{_or.or@or#}";
+		return result;
+	}
+	
+	function matchpwd(){
+		var pwdInput=document.getElementById("pwd").value;
+		var repwdInput=document.getElementById("rpwd").value;
+		var repassworderror=document.getElementById("repassworderror");		//span
+		var result= pwdInput==repwdInput;
+		if(result)
+			repassworderror.innerHTML="";
+		else 
+			repassworderror.innerHTML="Password doesn't match";
+		return result;
+	}
+	
+	function phoneval(){
+		var pattern=/^[0-9]{10}$/;
+		var phone=document.getElementById("mid").value;
+		console.log(pattern.test(phone));
+		var phoneerror=document.getElementById("phoneerror");
+		var result=pattern.test(phone);
+		if(result)
+			phoneerror.innerHTML="";
+		else
+			phoneerror.innerHTML="Invalid phone no";
+		return result;
+	}
+	
+	function newphone(){
+	var t=document.createElement("input");
+	t.setAttribute("type","text");
+	t.setAttribute("name","newph");
+	t.setAttribute("id","ph2");
+	var s=document.createElement("span");
+	s.attribute("")
+	}
+	
+	function pinval(){
+		var pattern=/^\d{6}$/;
+		var pin=document.getElementById("pinid").value;
+		console.log(pattern.test(pin));
+		var pinerror=document.getElementById("pinerror");
+		var result=pattern.test(pin);
+		if(result)
+			pinerror.innerHTML="";
+		else
+			pinerror.innerHTML="Invalid pin";
+		return result;
+	}
+	
+	function submitData(){
+		var emailval=emailval();
+		var usernmval=usernmval();
+		var passwordval=passwordval();
+		var matchpwd=matchpwd();
+		var phoneval=phoneval();
+		var pinval=pinval();
+		if(emailval&&passwordval&&matchpwd&&phoneval&&pinval&&usernmval)
+			return true;
+		else
+			return false;
+			
+	}
+	
+	function reset(){
+	//document.getElementById("emailerror").innerHTML=" ";
+	document.getElementById("dd").getElementById("form").getElementByClassName("errorbox").innerHTML=NULL;
+	//document.getElementById("dd").getElementById("form").getElementsByClassName("errorbox").reset();
+	}
+</script>
+</head>
+
+
+<!--ffef96/bisque-->
+
+<body>
+<h1 class="head">FROM VALIDATION</h1>
+<div class="d" id="dd">
+	<form class="frm" id="form" onsubmit="return submitData();" name="form">
+		<label>EMAIL ID:</label><br>
+		<input type="text" name="email" placeholder="Enter Email ID.." id="eid" onchange="emailval();" autofocus/><span class="errorbox" id="emailerror"></span><br><br>
+		
+		<label>USERNAME:</label><br>
+		<input type="text" name="userid" placeholder="Enter Username.." id="uid" onchange="usernmval();"/><span class="errorbox" id="useriderror"></span><br><br>
+		
+		<label>PASSWORD:</label><br>
+		<input type="password" name="password" placeholder="Enter Password.." id="pwd" onchange="passwordval();"/><span class="errorbox" id="passworderror"></span><br><br>
+		<label> CONFIRM PASSWORD:</label><br>
+		<input type="password" name="repassword" placeholder="Confirm Password.." id="rpwd" onchange="matchpwd();"/><span class="errorbox" id="repassworderror"></span><br><br>
+		
+		<label>MOBILE NUMBER:</label><br>
+		<input type="text" name="mobile" placeholder="Enter Mobile No.." id="mid" onchange="phoneval();"/>
+		<!--<input type="button" name="newph" value="+" onclick="newphone();"/>-->	<span class="errorbox" id="phoneerror"></span>
+		<div id="d1" name="divd"></div>
+		<br><br>
+		
+		<label>PIN CODE:</label><br>
+		<input type="text" name="pin" placeholder="Enter PIN Code.." id="pinid" onchange="pinval()"/><span class="errorbox" id="pinerror"></span><br><br><br>
+		
+		<input type="submit" onclick="submitData();" value="Submit" />
+        <input type="button" value="Reset" onclick="reset();"/>
+	
+	</form>
+</div>
+
+
+</body></html>
